@@ -16,7 +16,7 @@ async def register_employee(user1: EmpRegistration, db: Session = Depends(get_db
 
     new_employee = EmpsModel(
         empname=user1.employeename,
-        empid=user1.employeeid,  # Keep it as a string
+        empid=user1.employeeid,  
         empage=user1.employeeage,
         empsalary=user1.employeesalary
     )

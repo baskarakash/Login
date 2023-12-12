@@ -20,8 +20,8 @@ class EmpsModel(Base):
 
     empid = Column(String, primary_key=True, index=True)
     empname = Column(String, index=True)
-    empage = Column(String)  # Updated to character varying
-    empsalaray = Column(String) # Corrected the column name
+    empage = Column(String)  
+    empsalaray = Column(String) 
 
 class EmpRegistration(BaseModel):
     employeename: str

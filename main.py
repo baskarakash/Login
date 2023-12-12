@@ -28,7 +28,7 @@ async def get_current_user(token: str = Depends(decodeJWT)):
 @app.post("/auth/submitted", tags=["user"], response_model=dict)
 async def login_user(
     user_data: UserLoginJSON = None,
-    authorization: str = Header(...),  # Require the Authorization header
+    authorization: str = Header(...), 
     db: Session = Depends(get_db),
 ):
     if not authorization.startswith("Bearer "):
@@ -77,7 +77,7 @@ async def register_employee(user1: EmpRegistration, db: Session = Depends(get_db
 
     new_employee = EmpsModel(
         empname=user1.employeename,
-        empid=user1.employeeid,  # Keep it as a string
+        empid=user1.employeeid,  
         empage=user1.employeeage,
         empsalaray=user1.employeesalary
     )
