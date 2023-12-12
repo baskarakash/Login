@@ -7,6 +7,7 @@ from routes.auth_routes import router as auth_router
 from auth.jwt_handler import decodeJWT, signJWT
 from models.auth_models import AuthModel
 from settings import get_db
+from routes.employee_routes import router as employee_router
 
 app = FastAPI()
 
@@ -85,3 +86,11 @@ async def register_employee(user1: EmpRegistration, db: Session = Depends(get_db
     db.commit()
 
     return {"message": "Employee registration successful"}
+
+app.include_router(employee_router, tags=["employee"])
+
+app.include_router(auth_router, prefix="/auth", tags=["auth"])
+
+app.include_router(employee_router, tags=["employee"])
+
+app.include_router(employee_router, tags=["employee"])
