@@ -62,8 +62,3 @@ async def register_user(
 
     return {"message": "Registration successful", "access_token": access_token}
 
-# Add other routes and logic as needed
-# Example:
-# @router.get("/profile", tags=["user"], response_model=dict)
-# async def get_user_profile(current_user: str = Depends(get_current_user)):
-#     return {"user_profile": current_user}
