@@ -8,6 +8,16 @@ Create Date: 2023-12-15 10:51:45.371844
 from typing import Sequence, Union
 
 from alembic import op
+"""create_auth_and_employee_tables
+
+Revision ID: 4e8ca7fa048d
+Revises: 
+Create Date: 2023-12-15 10:51:45.371844
+
+"""
+from typing import Sequence, Union
+
+from alembic import op
 import sqlalchemy as sa
 
 
@@ -42,7 +52,3 @@ def upgrade():
         '''
     )
 
-# Define the downgrade function
-def downgrade():
-   ''' op.drop_table('auth')
-    op.drop_table('employee')'''

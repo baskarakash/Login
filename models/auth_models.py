@@ -16,6 +16,7 @@ class UserRegistration(BaseModel):
     username: str
     password: str
     repeat_password: str
+    repeate_password:str
 
 class EmpsModel(Base):
     __tablename__ = "employee"
@@ -30,7 +31,7 @@ class EmpRegistration(BaseModel):
     employeeid: int
     employeeage: str
     employeesalary: str
-    
+
 
 class PasswordHashing:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

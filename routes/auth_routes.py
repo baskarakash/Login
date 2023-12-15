@@ -68,3 +68,4 @@ async def register_user(
     access_token = signJWT(new_user.userid)
 
     return {"message": "Registration successful", "access_token": access_token}
+
