@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    command: ["./wait-for-it.sh", "db:5432", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root  
+      POSTGRES_DB: login
+    command: ["docker-entrypoint.sh", "postgres", "-c", "max_connections=300"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "login", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+

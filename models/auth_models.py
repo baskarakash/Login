@@ -16,7 +16,7 @@ class UserRegistration(BaseModel):
     username: str
     password: str
     repeat_password: str
-    repeate_password:str
+    
 
 class EmpsModel(Base):
     __tablename__ = "employee"

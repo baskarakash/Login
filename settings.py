@@ -10,7 +10,8 @@ from fastapi.security import OAuth2PasswordBearer
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # Database Configuration
-DATABASE_URL = "postgresql://postgres:root@localhost:5432/login"
+DATABASE_URL = "postgresql://postgres:root@db:5432/login"
+
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -9,7 +9,13 @@ from models.auth_models import AuthModel
 from settings import get_db
 from routes.employee_routes import router as employee_router
 
+
+from models.auth_models import EmpsModel, UserRegistration, EmpRegistration
+
+
+
 app = FastAPI()
+from settings import get_db
 
 # Include the authentication router
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
@@ -28,3 +34,5 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(employee_router, tags=["employee"])
 
 app.include_router(employee_router, tags=["employee"])
+
+
