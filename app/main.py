@@ -2,12 +2,10 @@ from fastapi import FastAPI, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Optional
-from models.auth_models import EmpsModel, UserRegistration, EmpRegistration
-from routes.auth_routes import router as auth_router
-from auth.jwt_handler import decodeJWT, signJWT
-from models.auth_models import AuthModel
-from settings import get_db
-from routes.employee_routes import router as employee_router
+from app.routes.auth_routes import router as auth_router
+from app.auth.jwt_handler import decodeJWT, signJWT
+from app.settings import get_db
+from app.routes.employee_routes import router as employee_router
 
 app = FastAPI()
 
@@ -24,7 +22,3 @@ MIN_TOKEN_LENGTH = 8
 app.include_router(employee_router, tags=["employee"])
 
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
-
-app.include_router(employee_router, tags=["employee"])
-
-app.include_router(employee_router, tags=["employee"])

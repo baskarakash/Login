@@ -1,12 +1,14 @@
- #routers/auth_routes.py
+# auth_routes.py
+
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
-from models.auth_models import AuthModel, UserRegistration
-from auth.jwt_handler import signJWT, decodeJWT
+from app.models.auth_models import AuthModel
+from app.routes.schema import UserRegistration
+from app.auth.jwt_handler import signJWT, decodeJWT, PasswordHashing
 from pydantic import BaseModel
 from typing import Optional
 from starlette.responses import JSONResponse
-from settings import MIN_TOKEN_LENGTH, get_db, oauth2_scheme
+from app.settings import MIN_TOKEN_LENGTH, get_db, oauth2_scheme
 
 router = APIRouter()
 
@@ -35,6 +37,10 @@ async def login_user(
 
     try:
         current_user = get_current_user(token_value)
+        # Verify the entered password against the stored hashed password
+        if not PasswordHashing.verify_password(user_data.password, current_user["pas"]):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+
         return {"message": "Successful Login!!!"}
     except HTTPException as e:
         if e.status_code == 401:
@@ -48,17 +54,18 @@ async def register_user(
     db: Session = Depends(get_db)
 ):
     existing_user = db.query(AuthModel).filter(AuthModel.userid == user_data.username).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Username already exists")
+    
 
     if user_data.password != user_data.repeat_password:
         raise HTTPException(status_code=400, detail="Password and Repeat password do not match")
 
-    new_user = AuthModel(userid=user_data.username, pas=user_data.password)
+    # Hash the password before storing it in the database
+    hashed_password = PasswordHashing.hash_password(user_data.password)
+
+    new_user = AuthModel(userid=user_data.username, pas=hashed_password)
     db.add(new_user)
     db.commit()
 
     access_token = signJWT(new_user.userid)
 
     return {"message": "Registration successful", "access_token": access_token}
-
